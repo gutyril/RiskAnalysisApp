@@ -1,0 +1,382 @@
+.Hand 	/*   Cursor parameters   */
+{cursor:	pointer;
+border-style:	none;
+}
+.H1 	/*   Survey name parameters   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	18px;
+font-weight:	bold;
+font-style:	normal;
+color:	#cc0000;
+text-align:	center;
+text-decoration:	none;
+padding:	15px 5px 15px 5px;
+}
+.H2 	/*   Question text parameters   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	11px;
+font-weight:	normal;
+color:	#cc0000;
+text-align:	left;
+text-decoration:	none;
+padding:	8px 5px 5px 8px;
+
+}
+.H3 	/*   Answer text parameters   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	11px;
+font-weight:	normal;
+color:	#434343;
+text-align:	left;
+text-decoration:	none;
+vertical-align:	middle;
+padding:	3px;
+}
+.H4 	/*   Answer text parameters for rank scale question type   */
+{font-family:	Verdana, Arial, Helvetica, sans-serif;
+font-size:	11px;
+font-weight:	normal;
+color:	#434343;
+text-align:	left;
+text-decoration:	none;
+vertical-align:	middle;
+width:	350px;
+}
+.H5 	/*   Answer text parameters for left column of compare one agains another question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	11px;
+font-weight:	normal;
+color:	#434343;
+text-align:	right;
+text-decoration:	none;
+vertical-align:	middle;
+width:	40%;
+}
+.H6 	/*   Answer text parameters for right column of compare one agains another question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	11px;
+font-weight:	normal;
+color:	#434343;
+text-align:	left;
+text-decoration:	none;
+vertical-align:	middle;
+}
+.H7 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H8 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H9 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H10 	/*   Survey text description   */
+{font-family:	Arial, Geneva, Helvetica, san-serif;
+font-size:	12px;
+font-weight:	bold;
+color:	#cc0000;
+padding:0 0 5px 0;
+text-align:	center;
+text-decoration:	none;
+}
+.H11 	/*   Word "or" between left and right columns of Compare One Against Another question type   */
+{font-family:	Geneva, Arial, Helvetica, san-serif;
+font-size:	10px;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+vertical-align:	middle;
+}
+.H12 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H13 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H14 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H15 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H16 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H17 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H18 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H19 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H20 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H21 	/*   Title text parameters for rank scale question type   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H22 	/*   Text only (introduction and headings) parameters   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	14px;
+font-weight:	bold;
+color:	#cc0000;
+text-align:	center;
+text-decoration:	none;
+padding:	5px;
+}
+.H23 	/*   Text "Page x of y" parameters   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	normal;
+color:	#434343;
+}
+.H24 	/*   Print Preview Mode: respondent text parameters   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	bold;
+color:	#434343;
+text-align:	left;
+}
+.H25 	/*   Total column in numeric allocation   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	12px;
+font-weight:	bold;
+color:	#434343;
+text-align:	left;
+vertical-align:	middle;
+}
+.HFooter 	/*   Text "Survey footer" parameters   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	10px;
+font-weight:	bold;
+color:	#000000;
+}
+.background 	/*   Button background   */
+{background:	url(129957.gif) repeat-x top #d1d5dc;
+padding:	0px;
+}
+.tablebckg 	/*   Table background   */
+{background:	url(129961.gif) repeat-y center;
+text-align:	center;
+width:	1004px;
+}
+.uptable 	/*   Row of survey name   */
+{color:	#efefe7;
+text-align:	center;
+border:	#ffffff;
+}
+.ODD 	/*   Background of odd lines of answer text parameters   */
+{vertical-align:	middle;
+}
+.EVEN 	/*   Background of even lines of answer text parameters   */
+{background:	#EDEDF4;
+vertical-align:	middle;
+}
+.ODD_BAR 	/*   Background of completed part of progress bar   */
+{
+vertical-align:	top;
+}
+.EVEN_BAR 	/*   Background of incompleted part of progress bar   */
+{background:	#EDEDF4;
+vertical-align:	top;
+}
+.HEADING 	/*   Background of heading answers text parameters   */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	12px;
+font-weight:	normal;
+color:	#000000;
+background-color:	#ffffff;
+text-decoration:	none;
+vertical-align:	top;
+}
+.advancedTextFC	/*      */
+{}
+.DIVIDER_MESSAGE/* There are unknown classes below */{}
+body 	/*      */
+{margin:	0px;
+}
+.HTLOGO	/*      */
+{padding:	0 50px;
+}
+.H4RIGHT 	/*   Answer text parameters for rank scale question type right part   */
+{font-family:	Verdana, Arial, Helvetica, sans-serif;
+font-size:	11px;
+font-weight:	normal;
+color:	#434343;
+text-align:	left;
+text-decoration:	none;
+vertical-align:	middle;
+width:	175px;
+}
+.tablebckg 	/*   Table background   */
+{background:	url(129961.gif) repeat-y center;
+text-align:	center;
+width:	1004px;
+}
+form 	/*      */
+{border:	0px;
+margin:	0px;
+}
+select	/*      */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	11px;
+font-weight:	normal;
+color:	#434343;
+text-align:	left;
+text-decoration:	none;
+vertical-align:	middle;
+}
+input	/*      */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	11px;
+font-weight:	normal;
+color:	#434343;
+text-align:	left;
+text-decoration:	none;
+vertical-align:	middle;
+}
+textarea	/*      */
+{font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size:	11px;
+font-weight:	normal;
+color:	#434343;
+text-align:	left;
+text-decoration:	none;
+vertical-align:	middle;
+}
+.H4LEFT 	/*   Answer text parameters for rank scale question type left part   */
+{font-family:	Verdana, Arial, Helvetica, sans-serif;
+font-size:	11px;
+font-weight:	normal;
+color:	#434343;
+text-align:	right;
+text-decoration:	none;
+vertical-align:	middle;
+width:	175px;
+}
+.HQIMRightFloat	/*      */
+{width:	1px;
+}
+.Hand 	/*   Cursor parameters   */
+{cursor:	pointer;
+border-style:	none;
+}
+.HQIMLeftFloat	/*      */
+{width:	1px;
+}
+.DIVIDER_MESSAGE	/*   There are unknown classes below   */
+{}
+.HBUTTONS 	/*      */
+{margin:	20px;
+}
+.tdAnswersCell 	/*      */
+{padding:	10px 40px 0px 40px;
+}
+.tblAllQuestions 	/*      */
+{padding:	0px 55px 0px 55px;
+}
+.HQIM	/*      */
+{text-align:	center;
+}
+.ERROR_MESSAGE	/*      */
+{font-family:	Arial, Helvetica, sans-serif;
+font-size:	9pt;
+font-style:	italic;
+color:	#ff0000;
+text-align:left;
+}
+#tablelogo	/*      */
+{background:	url(129959.gif) no-repeat center top;
+height:	82px;
+width:	1004px;
+}
+.HAnchor, .HQIM{
+height:1px;
+line-height:1px;}
+
+.tdHeaderCell{
+background:url(154475.jpg) no-repeat left top;}
+.HRG3D { padding:1px}
+.absrankAlert {background:pink; border: 1px red dashed; padding:0px}
+.HBUTTONS input{text-align:center}
+#goSubmitPage {display:none;}

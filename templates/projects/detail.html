@@ -1,0 +1,13 @@
+<h1>{{ proyecto.name }}</h1>
+
+{% if error_message %}
+	<p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+<ul>
+	<li> {{ proyecto.descripcion }}</li>
+	<li> {{ proyecto.tipo_de_proyecto }}</li>
+	<li> {{ proyecto.fecha_de_inicio }}</li>
+	<li> {{ proyecto.fecha_de_termino }}</li>
+	<li> {{ proyecto.puntaje_total }}</li>
+</ul>

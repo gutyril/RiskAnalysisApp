@@ -1,0 +1,685 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0062)http://www.keysurvey.com/votingmodule/s180/survey/222054/2e3c/ -->
+<html lang="UTF-8"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>var currentPosition = 0;</script>
+
+<title>
+Customer Satisfaction Survey </title>
+
+<script type="text/javascript" language="javascript" src="{{ STATIC_URL }}jquery.js"></script><script language="JavaScript" type="text/javascript" src="{{ STATIC_URL }}CombinedJavascript"> alert('Error! VoteLibJavascript Script was not loaded'); </script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}pipingCallout.css">
+
+<script language="JavaScript" type="text/javascript">var beforeSubmitMsg = "Before submitting you must first complete this question: \n";
+var pleaseAnswerAllRowsMsg = "Please answer all rows in question: \n";
+var pleaseAnswerMsg = "Please answer the question below: \n";
+var pleaseAnswerAllMatrixFieldsMsg = "Please answer all matrix fields: \n";
+var atLeastMsg = "Please answer at least";
+var rowsMsg = "rows";
+var oneRowMsg = "1 row";
+var inQueMsg = "in question: \n";
+var inTheQueMsg = "In the question: \n";
+var youCanChooseMsg = "You can use each column only once.";
+var exclusiveAlert="The combination selected in question \"{0}\" is not valid.\n Please check your answers";
+var mayCheckFullMsg = "You may select only up to {0} answer options in this question: \n {1} ";
+var chooseAtLeastFullMsg = "Please choose at least {0} answers to this question: \n {1}";
+var exactlyFullMsg = "Please choose exactly {0} answers to this question: \n {1}";
+var checkFromFullMsg = "You may only check from {0} to {1} answers to this question: \n {2}";
+var inTheQue = "In the question: \n";
+var summLess = "Sum total is less than {0}";
+var summExceeds = "Sum total exceeds {0}";
+var notAnsweredButPreferredMsg = "You did not answer the question(s):\n";
+var isItOkMsg = "\nPress ok to continue with the survey submission, or cancel to go back and correct.";
+var pleaseRespondToTheFollowingItems = "Please respond to all of the following:\n";
+
+jQuery(function(){
+  /*POST_LOAD*/
+});
+
+document.onkeypress = stopFormEnter;
+var  isPreviewMode=false;
+
+var doubleclick1=false;
+var arr_other=new Array(0,5106130);
+var arrtext_other=new Array("","\n"+"How often do you use [Company Name] products  and services?");
+var profileCodes=new Array("0"); // array of possible answers to link question that links to Profile Survey
+var dispNameValues=new Array(0); // array of used display name values
+var prefAnsweredQue=new Array(0); // array of Question IDs where is preferred for answering
+var prefAnsweredQueTexts=new Array(0); // array of Question texts(chuncked) where is preferred for answering
+var prefAnsweredQueBackup=new Array(0); // needed for reselected answers
+var prefAnsweredQueTextsBackup=new Array(0); // needed for reselected answers
+var preview="/votingmodule/VOTING1/servlet/survey.VotingSurvey?i_n_f=survey222054_pg0_totpg2_rid162644825_lqid5106132&msig=0d72f20a13fe2b8cdcca27dd12310496";
+
+ //window.onunload=onunloadSaving;
+var votingStartDateTime='03040c111b2631344145484b536c6f79818a92999da8abb2c5ced1dae1e6edf0323738212d10080d71707d7e6b335eb608f8046aa0e21b8a6d465e3e51';
+var submit_time=0;
+var timeUp=0;
+function checkTimeOut()
+{ for( var i=0; i<document.theForm.elements.length; i++ )
+  { var elem = document.theForm.elements[i];
+    if (elem.name.indexOf("other")==0) elem.onblur=null;
+  }
+  document.theForm.target="_self";
+  document.theForm.startTime.value=votingStartDateTime;
+  doSubmit(true,"",preview);
+}
+if (submit_time>0) setTimeout('checkTimeOut();',submit_time);
+var timeout=submit_time-5*60*1000;
+document.sessionExpires=new Date(new Date().getTime()+submit_time);
+function sessionWillExpire()
+{ if (submit_time==0) return;
+  var exp=document.sessionExpires;
+  var mins=Math.round((exp.getTime()-new Date().getTime())/(60*1000.0));
+  if (mins<1) return;
+  var when=exp.getHours()+':'+((exp.getMinutes()<10?"0":"")+exp.getMinutes());
+  focus();
+  if (submit_time>300000-5) alert("Your session will expire in {0} minutes at {1}".replace(/\{0\}/,mins).replace(/\{1\}/,when));
+}
+if (submit_time>0) setTimeout('sessionWillExpire()',timeout);
+//remain time
+var tf=0;
+var timeLeft=0;
+var tcount=0;
+if (submit_time>0) tf=window.setTimeout("TimerFunc();",1000);
+function TimerFunc()
+{  tf=window.setTimeout("TimerFunc();",1000);
+   tcount++;
+   var exp=document.sessionExpires;
+   timeLeft=Math.round((exp.getTime()-new Date().getTime())/1000);
+   var min_left=Math.round((timeLeft-30)/60);
+   var msg='';
+   if (min_left>1) msg=min_left+" minutes ";
+   else if (min_left==1) msg=min_left+" minute ";
+   var sec_left=timeLeft-min_left*60;
+   window.status=msg+sec_left+" seconds remaining";
+   if (timeLeft<5)
+   { window.clearTimeout(tf);
+     timeUp=1;
+   }
+}
+
+//  clear answer text from other element, if another radio selected
+function check(frm_val, QID, checkit, element, other_element) {
+  var frm = null;
+  if (element != null && element != undefined) frm = findQuestionElementsOnForm(QID, element.form);
+  if (!frm) return;
+  var jklmn = 0;
+  while (jklmn < prefAnsweredQue.length) {
+    if (prefAnsweredQue[jklmn] == QID || prefAnsweredQueBackup[jklmn] == QID) {
+      var i = 0;
+      var somethingChecked = false;
+      while (i < frm.length) {
+        var elem = frm[i];
+        if (elem.name != null && elem.value != null && !j$(elem).data('tallinn')) {
+          if (elem.name.indexOf("R" + QID) == 0 && elem.checked) {
+            if (prefAnsweredQue[jklmn] == QID) removeFromPreferredArrays(QID);
+            jklmn = prefAnsweredQue.length;
+            somethingChecked = true;
+            break;
+          }
+        }
+        i++;
+      }
+      if (!somethingChecked && prefAnsweredQueBackup[jklmn] == QID) addToPreferredArrays(QID);
+    }
+    jklmn++;
+  }
+
+  if (!checkit) return;
+  if (other_element == null || other_element.name == null || other_element.value.length == 0 || other_element.readOnly) return;
+
+  i = 0;
+  var check_radio = true;
+  var AID = parseInt(findAID(other_element.name));
+  while (i < frm.length) {
+    var elem2 = frm[i];
+    if (elem2.name != null && elem2.value != null && elem2.checked != null) {
+      if (elem2.name.indexOf("R" + QID) == 0 && elem2.value != AID && elem2.checked && elem2.type == 'radio') {
+        check_radio = false;
+        break;
+      }
+      if (elem2.name.indexOf("R" + QID) == 0 && elem2.value == AID && !elem2.checked) {
+        check_radio = false;
+        break;
+      }
+    }
+    i++;
+  }
+  if (!check_radio) other_element.value = "";
+}
+
+var imageElement=null;
+function moveRadioAndCheck(qid,aid,name,fromOther,isRadio,checkit,other_element,obj)
+{ moveRadio("Question"+qid,name,aid,fromOther,isRadio,other_element);
+  if (name!=null && aid!=null)
+  { var frm=findForm(""+qid);
+    for( var i=0; i<frm.length; i++ )
+    { if (frm[i]!=null && frm[i].name!=null && frm[i].name.indexOf(name)==0  && frm[i].value==aid)
+      { imageElement=frm[i];
+      }
+    }
+  }
+  check(aid,qid,checkit,imageElement,other_element);
+}
+function validateAnswerText()
+{ var i=1;
+  while (i<arr_other.length)
+  {  if (arr_other[i]<=0) {i++; continue;}
+     if (!validateOtherState(arr_other[i],arrtext_other[i])) return false;
+     i++;
+  }
+  return true;
+}
+//the next line is replaced with Javascript function calls in SurveyLook
+//(one call for each question needing validation):
+function validate_full()
+{ var res = true;
+  if(!validateRequiredGeneral(5106132,"Have you experienced any problems using [Company Name] products or services?",true,"")) { 
+ if (_current_form == null) return false;
+ else res = false;
+}
+
+var allForms=document.forms;
+var formSum = allForms.length;
+var cf = '';
+var cfsufix = '';
+  return res;
+}
+function showRespondentInfo(){}
+function doSubmit(skip_validate,dir,formAction)
+{ window.onbeforeunload=null;
+  window.onunload=null;
+  var beginTime=new Date().getTime();
+  if (!validateProfileCode()) return;
+  if (!validateDisplayName()) return;
+  if (!validateAnswerText()) return;
+  if (!skip_validate)
+  { if (!validate_full())
+    {  return;
+    }
+  }
+  if (dir=="")
+  { //BEFORE_EXECUTE_VOTING
+  }
+  if (document.theForm.validateTime!=null) document.theForm.validateTime.value=""+(new Date().getTime()-beginTime);
+  document.theForm.onunload.value=0;
+  document.theForm.Dir.value=dir;
+  if (formAction!=null && formAction.length>0) document.theForm.action=formAction;
+  j$("#goSubmitPage").attr("disabled", "disabled");
+  document.theForm.submit();
+}
+
+//  there 3 functions return whether browser should submit form,
+//  returns 'false' if form already successfully submitted by script.
+//  If last click was within 5 seconds, then survey is submitted without
+//  scripts - in case respondent is having trouble (or doesn't see alert)
+//  and tries to click again.
+window.scriptsOk=window.doSubmit && window.validate_full && window.validateRequiredGeneral;
+window.lastClick=0;
+var twoSeconds=2000;
+function pressedBack()
+{ if(window.pdsSubmitted)pdsSubmitted();
+  showBeforeAlert=false;
+  document.theForm.target="_self";
+  if (!window.scriptsOk) return true;
+  if (new Date().getTime()-window.lastClick<twoSeconds) return false;
+  window.lastClick=new Date().getTime();
+  doSubmit(true,"Back","");
+  return false;
+}
+function pressedNext()
+{ if(window.pdsSubmitted)pdsSubmitted();
+  showBeforeAlert=false;
+  document.theForm.target="_self";
+  if (!window.scriptsOk) return true;
+  if (new Date().getTime()-window.lastClick<twoSeconds) return false;
+  window.lastClick=new Date().getTime();
+  doSubmit(false,"Next","");
+  return false;
+}
+function pressedVote()
+{ if(window.pdsSubmitted)pdsSubmitted();
+  showBeforeAlert=false;
+  document.theForm.target="_self";
+  if (!window.scriptsOk) return true;
+  if (new Date().getTime()-window.lastClick<twoSeconds) return false;
+  window.lastClick=new Date().getTime();
+  doSubmit(false,"",preview);
+  return false;
+}
+function pressedReview()
+{ document.theForm.target="_blank";
+  doSubmit(false,"Review","");
+  j$("#goSubmitPage").removeAttr("disabled");
+  document.theForm.target = "_self";
+}
+function onbeforeAlert()
+{ if (getShowBeforeAlert() && onunloadSaving(false,true))
+  { return "Are you sure you want to navigate away from this page?\n Your responses on this page will not be saved!";
+  } // else no alert will popup
+}
+ window.onbeforeunload=onbeforeAlert;
+//validate ProfileCode for Profile Poll
+function validateProfileCode()
+{ var forCheckField=null;
+  if (forCheckField==null) return true;
+  var validateProfileCodeMsg='[no profile question]';
+  for (var i=1; i<=profileCodes.length; i++)
+  { if (profileCodes[i]==forCheckField.value) return true;
+  }
+  alert("The password you have entered is not valid. \n\nPlease enter a valid password.");
+  forCheckField.focus();
+  return false;
+}
+//validate originality of Display Name
+function validateDisplayName()
+{ var ret=true; var dispNameField=null; if (dispNameField==null) return ret;
+  dispNameField.value=Trim(dispNameField.value);
+  var validateDispNameMsg='';
+  for (var i=1; i<=dispNameValues.length; i++)
+  { if (dispNameValues[i]==dispNameField.value || Trim(dispNameField.value)=='') {ret=false; break;}
+  }
+  if (!ret)
+  { //alert(<UNIQUE1/>+' '+validateDispNameMsg+' '+<UNIQUE2/>+' '+validateDispNameMsg+' '+<UNIQUE3/>+' '+validateDispNameMsg+'!');
+    alert("The value of {0} is used as a Display Name in the chat room and must be unique. This Display Name, {1}, has been taken.\nPlease specify another Display Name {2}".replace(/\{0\}/,validateDispNameMsg).replace(/\{1\}/,validateDispNameMsg).replace(/\{2\}/,validateDispNameMsg));
+    dispNameField.focus();
+  }
+  return ret;
+}
+
+var thisRatingsMatrix360 = [];
+var thisAverageMatrix360 = [];
+
+function processKeyPress(a, event, is360) {
+  if (a.type == 'radio' && a.className == 'cRadio') {
+//    goTallinn = ((event.keyCode || event.which) == 32);
+    checkRadioInGrid(a);
+//    goTallinn = true;
+  }
+  is360 && changeForm(a);
+}
+
+function processFocus(a, event, is360){
+    if (is360){
+      if ((a.tagName=="INPUT" && a.type=="text") || a.tagName=="TEXTAREA"){
+         currentFocusedElem=a;
+      }
+    }
+    processKeyPress(a,event);
+}
+
+function processKeyDown(a, event) {
+  if (a.className == 'cRadio') setTallinn(a, event);
+}
+
+function processMouseDown(a, event) {
+  if (a.className == 'cRadio') setTallinn(a, event);
+}
+function processClick(a, event, is360) {
+  processRadio(a, true);
+  if (a.className == 'cRadio') checkRadioInGrid(a);
+  if (is360) {
+    changeForm(a);
+    if (thisRatingsMatrix360[a.id] != null && a.tagName != 'SELECT'){
+      getRetingData(a, thisRatingsMatrix360[a.id]);
+    }
+    if (thisAverageMatrix360[a.id] != null && a.tagName != 'SELECT'){
+      var thisAverageMatrix360Inner = thisAverageMatrix360[a.id];
+      getAverageData(a, thisAverageMatrix360Inner[0], thisAverageMatrix360Inner[1],
+                     thisAverageMatrix360Inner[2], thisAverageMatrix360Inner[3]);
+    }
+  }
+}
+function processInputTextChange(elem, event){
+//  if (elem.type="text" )
+   changeForm(elem);
+
+}
+function processChange(a, event, is360) {
+  if (is360) {
+    if (thisRatingsMatrix360[a.id] != null) {
+      getRetingData(a, thisRatingsMatrix360[a.id]);
+    }
+    if (thisAverageMatrix360[a.id] != null) {
+      var thisAverageMatrix360Inner = thisAverageMatrix360[a.id];
+      getAverageData(a, thisAverageMatrix360Inner[0], thisAverageMatrix360Inner[1],
+                     thisAverageMatrix360Inner[2], thisAverageMatrix360Inner[3]);
+    }
+  }
+}
+
+var j$ = jQuery.noConflict();
+function initPageSelectorError(){
+  if(j$(".ERROR_MESSAGE").length > 0){
+    var errorObject = j$(".ERROR_MESSAGE")[0];
+    if(errorObject !=null && errorObject.style.display == 'none')
+      return;
+    var labelObject = document.getElementById("QuestionLabel"+errorObject.title);
+    var questionText = "";
+    if(labelObject!=null){
+      questionText = removeHTMLTags(labelObject.innerHTML);
+      var labelObjLength = questionText.length;
+      if(labelObjLength > 50)
+        questionText = questionText.substring(0,50)+"...";
+    }
+    alert('    ' + removeHTMLTags(errorObject.innerHTML) + (questionText.length == 0 ? '' : (':\n' + questionText)));
+    scrollToQuestion = '#Q' + errorObject.title;
+    window.setTimeout(scrollToSomeQuestion, 250);
+  }
+}
+function closeThis(obj){
+  if(obj!=null){
+    obj.style.display='none';
+  }
+}
+function removeHTMLTags(string){
+  string = string.replace(/&(lt|gt);/g, function (strMatch, p1){
+ 	  return (p1 == "lt")? "<" : ">";
+  });
+ 	var strTagStrippedText = string.replace(/<\/?[^>]+(>|$)/g, "");
+  return strTagStrippedText;
+}
+function initRadio() {
+  j$('input[type="radio"]').each(function() {
+    var elem = j$(this);
+    elem.data('tallinn', elem.is(':checked'));
+  });
+}
+function setEvents(is360) {
+  initRadio();
+  j$('input, select, textarea')
+    .live('keypress', function(e) {processFocus(e.target, e, is360); })
+    .live('click', function(e) {processClick(e.target, e, is360); });
+  if(is360){
+   j$('input').live('change', function(e) {processInputTextChange(e.target, e); });
+   j$('textarea').live('change', function(e) {changeForm(e.target); });
+  }
+  if(j$.browser.msie)
+    j$('select').bind('change', function(e) {processChange(e.target, e, is360); });
+  else
+    j$('select').live('change', function(e) {processChange(e.target, e, is360); });
+}
+
+//checks whether one element is chosen only in a column
+var checkRadioInGridArray = [];
+function setTallinn(obj, event) {
+//  var keyCode = (event.keyCode || event.which);
+  if (!isPressedTab(event)/* || (keyCode > 40 && keyCode < 37)*/) {
+//    tallinn = obj.checked;
+  }
+}
+function isSetPressedEnter(event) {
+  if (isPressedEnter(event)) {
+    return false;
+  }
+}
+function checkRadioInGrid(rb) {
+//  if (tallinn && goTallinn) rb.checked = false;
+  var currentForm = rb.form;
+  var el_id = new String(rb.id);
+  var first_idx = el_id.indexOf("R");
+  var last_idx = el_id.indexOf("_");
+  var QID = el_id.substring(first_idx + 1, last_idx);
+  if (!checkRadioInGridArray[QID]) return false;
+  var frm = findQuestionElementsOnForm(QID, currentForm);
+  var l = frm.length;
+  var m = 0;
+  var arr = rb.parentNode.parentNode.childNodes;
+  var arrSize = arr.length;
+  for (var i = 0; i < arrSize; i++) {
+    var s = new String(arr[i].className);
+    if (s.indexOf("HRG3D") > -1) {
+      m++;
+    }
+  }
+  var n = l / m;
+  var res = false;
+  var isShowErrorString = false;
+  for (var i = 0; i < m; i++) {
+    var buf = [];
+    var count = 0;
+    for (var j = 0; j < n; j++) {
+      var elem = frm[i + j * m];
+      if (elem == null) break;
+      var ename = elem.name;
+      if (ename == null) break;
+      if (ename.indexOf("R" + QID) == 0) {
+        if (elem.checked) {
+          count++;
+          buf[j] = elem;
+        } else {
+          buf[j] = null;
+        }
+      }
+    }
+    isShowErrorString = (isShowErrorString || count > 1);
+    for (var j = 0; j < n; j++) {
+      var be = frm[i + j * m];
+      if (buf[j] == null || count < 2) {
+        be.parentNode.className = "HRG3D";
+      } else {
+        be.parentNode.className = "HRG3D absrankAlert";
+      }
+    }
+    res = true;
+  }
+  var erid = "ERMSG" + QID;
+  var erobj = document.getElementById(erid);
+  if (!erobj) return res;
+  if (isShowErrorString) {
+    //erobj.style.visibility="visible";
+    erobj.style.display = "block";
+  } else {
+    //erobj.style.visibility="hidden";
+    erobj.style.display = "none";
+  }
+  return res;
+}
+//
+function bodyOnload(){
+  if (window.MM_preloadImages) window.MM_preloadImages("{{ STATIC_URL }}back_s_222054.gif","{{ STATIC_URL }}back_s1_222054.gif","{{ STATIC_URL }}next_s_222054.gif","{{ STATIC_URL }}next_s1_222054.gif","{{ STATIC_URL }}vote_222054.gif","{{ STATIC_URL }}vote1_222054.gif","{{ STATIC_URL }}close_222054.gif","{{ STATIC_URL }}close1_222054.gif");
+   MM_HideLayer('wait_div',true);MM_HideLayer('Layer0',false);
+ if (window.opener && !window.opener.closed && window.opener.length > 0 && window.opener['focusPreview']) {window.opener.focusPreview(window);}setTimeout('setEvents(false)', 5);if (window.setHeader) setTimeout('setHeader()', 5);if (window.initPageSelectorError) setTimeout('initPageSelectorError()', 5);
+}</script>
+
+<meta name="robots" content="noindex, follow">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}defaultSurveyStyle.css">
+
+  <meta name="viewport" content="width=device-width, user-scalable=yes"><link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style_222054.css"><script type="text/javascript" src="{{ STATIC_URL }}full.php"></script><script type="text/javascript" src="{{ STATIC_URL }}go3.js"></script></head>
+
+<body onbeforeunload="javascript:onbeforeAlert();if (window.bodyOnUnLoad) window.bodyOnUnLoad();" onload="javascript:if (window.bodyOnload) window.bodyOnload();
+" class="background" onclick="javascript:if (doubleclick1 &amp;&amp; window.event) window.event.returnValue=false;">
+<div id="main_frame">
+<table id="tablelogo" width="95%" border="0" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td class="HTLOGO" align="left">
+			<div id="divLogo" style="display:none">null</div>
+				<img id="Logo" name="Logo" src="{{ STATIC_URL }}182236.gif" alt="survey logo here" title="survey logo here" border="0" width="1" height="1"></td>
+	</tr>
+</table>
+
+<form name="theForm" method="post" action="evaluar/">
+{% csrf_token %}
+<table width="95%" border="0" cellpadding="0" cellspacing="0" class="tablebckg" align="center">
+<tr><td class="tblAllQuestions">
+
+{% if riesgo_list %} 
+
+<table border="0" cellpadding="1" cellspacing="1" style="width: 100%; ">
+		<tr class="H1">
+			<td colspan="1">
+				{{ categoria.nombre }}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1" style="text-align: center; ">
+				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td>
+		</tr>
+		<tr>
+			<td>
+				<table border="0" cellpadding="1" cellspacing="0" style="width: 100%; ">
+					<tbody>
+						<tr style="text-align: center; font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif; font-size:14px; font-weight:	bold;;" >
+							<td>
+								&nbsp;</td>
+							<td colspan="5" style="text-align: center; ">
+								Probabilidad
+							</td>
+							<td style="text-align: center; ">
+								 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</td>
+							<td colspan="5" style="text-align: center; ">
+								Impacto
+							</td>
+						</tr>
+						<tr style="text-align: center; font-family:	Verdana, Geneva, Arial, Helvetica, sans-serif; font-size:10px;">
+							<td>
+								&nbsp;</td>
+							<td >
+									Muy Poco Probable
+							</td>
+							<td>
+									Poco Probable
+							</td>
+							<td>
+									Probable
+							</td>
+							<td>
+									Muy Probable
+							</td>
+							<td>
+									No Aplica
+							</td>
+							<td>
+								&nbsp; &nbsp;&nbsp;</td>
+							<td>
+								Muy Bajo Impacto</td>
+							<td>
+								Bajo Impacto</td>
+							<td>
+								Alto Impacto</td>
+							<td>
+								Muy Alto Impacto</td>
+							<td>
+								No Aplica</td>
+						</tr>
+
+						{% for riesgo in riesgo_list %}
+
+
+						<tr class="EVEN">
+							<td class="H2">
+								<span> {{ riesgo.tipo_de_riesgo.nombre }} </span>
+							</td>
+							<td style="text-align: center; ">
+								<p>
+									<span style="font-size:10px;"><input name="probabilidad_{{ riesgo.id }}" type="radio" value="1" {% if riesgo.probabilidad == 1 %} checked {% endif %} /></span></p>
+							</td>
+							<td style="text-align: center; ">
+								<p>
+									<span style="font-size:10px;"><input name="probabilidad_{{ riesgo.id }}" type="radio" value="2" {% if riesgo.probabilidad == 2 %} checked {% endif %} /></span></p>
+							</td>
+							<td style="text-align: center; ">
+								<p>
+									<span style="font-size:10px;"><input name="probabilidad_{{ riesgo.id }}" type="radio" value="3" {% if riesgo.probabilidad == 3 %} checked {% endif %} /></span></p>
+							</td>
+							<td style="text-align: center; ">
+								<p style="">
+									<span style="font-size: 10px; "><input name="probabilidad_{{ riesgo.id }}" type="radio" value="4" {% if riesgo.probabilidad == 4 %} checked {% endif %} /></span></p>
+							</td>
+							<td style="text-align: center; ">
+								<p>
+									<span style="font-size:10px;"><input name="probabilidad_{{ riesgo.id }}" type="radio" value="0" {% if riesgo.probabilidad == 0 %} checked {% endif %} /></span></p>
+							</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								<br />
+								<input name="impacto_{{ riesgo.id }}" type="radio" value="1" 
+                  {% if riesgo.impacto == 1 %} checked {% endif %} /><br />
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								<br />
+								<input name="impacto_{{ riesgo.id }}" type="radio" value="2"
+                  {% if riesgo.impacto == 2 %} checked {% endif %} /><br />
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								<br />
+								<input name="impacto_{{ riesgo.id }}" type="radio" value="3"
+                  {% if riesgo.impacto == 3 %} checked {% endif %} /><br />
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								<br />
+								<input name="impacto_{{ riesgo.id }}" type="radio" value="4"
+                  {% if riesgo.impacto == 4 %} checked {% endif %} /><br />
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								<br />
+								<input name="impacto_{{ riesgo.id }}" type="radio" value="0"
+                  {% if riesgo.impacto == 0 %} checked {% endif %} /><br />
+								&nbsp;</td>
+						</tr>
+
+						{% endfor %}
+						<tr>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+							<td style="text-align: center; ">
+								&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+</table>
+
+{% else %}
+
+	<table border="0" cellpadding="1" cellspacing="1" style="width: 100%; ">
+		<tr class="H1">
+			<td colspan="1">
+				No hay riesgos definidos
+			</td>
+		</tr>
+	</table>
+
+{% endif %}
+
+
+
+
+<br id="brQuestionSpace5106124" class="brQuestionSpace">
+
+<br id="brQuestionSpace5106132" class="brQuestionSpace">
+<div align="center" class="HBUTTONS">
+
+
+	<input type="submit" name="evaluar" id="evaluar" src="{{ STATIC_URL }}next_s_222054.gif" tabindex="107" onclick="javascript:try{if (!isPressedTab(event) &amp;&amp; window.pressedNext) return window.pressedNext();}catch(ex){};" onkeypress="javascript:try{if (!isPressedTab(event) &amp;&amp; window.pressedNext) return window.pressedNext();}catch(ex){};" onmouseover="javascript:this.src=&quot;{{ STATIC_URL }}next_s1_222054.gif&quot;;" onmouseout="javascript:this.src=&quot;{{ STATIC_URL }}next_s_222054.gif&quot;;" title="Next page" alt="Next page">
+
+
+
+</div></td></tr>
+
+<tr class="trProgressLine"><td class="tdProgressLine" tabindex="108"></td></tr>
+</table>
+</form>
+
+<script language="JavaScript" type="text/javascript">function updatePageSelectorPosition(){var rgid = /^DivPage[0-9]+/; var m = document.getElementsByTagName('DIV'); var ts = document.getElementById('divTotalScore'); var lastPage = true; var pageHeight = 0; for (i=m.length-1; i>=0; i--) {  if(m.item(i).id==''){   var topRes = parseInt(m.item(i).style.top);   var heightRes = parseInt(m.item(i).style.height);   if(topRes+heightRes > pageHeight){    pageHeight=topRes+heightRes;   } } else if(m.item(i).id==rgid.exec(m.item(i).id)){   m.item(i).style.height=pageHeight+'px';   m.item(i).style.overflow="scroll";   if(m.item(i).scrollHeight>0){   m.item(i).style.height=m.item(i).scrollHeight+'px';   }  if(lastPage && ts!=null){   ts.style.top = parseInt(m.item(i).style.height)+'px';    m.item(i).style.height=parseInt(ts.style.top)+22+'px';   }  m.item(i).style.overflow="";   pageHeight = 0;   lastPage = false; }}var labelNull = document.getElementById("QuestionLabelnull");if (labelNull != null){ labelNull.parentNode.align='right'; labelNull.parentNode.className='';}var header_tubs = document.getElementById('header_tubs'); var sectionBody = document.getElementById('sectionBody'); var footer_tubs = document.getElementById('footer_tubs'); if (sectionBody != null){  sectionBody.style.height= pageHeight+'px'; } if (header_tubs != null && sectionBody !=null){  sectionBody.style.top=header_tubs.offsetHeight+'px'; } if (sectionBody !=null && footer_tubs !=null){  footer_tubs.style.top=pageHeight+'px'; } if (header_tubs != null && sectionBody !=null && footer_tubs !=null){  footer_tubs.style.top=(pageHeight+header_tubs.offsetHeight)+'px'; }} updatePageSelectorPosition();</script>
+</div></body></html>
